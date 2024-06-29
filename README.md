@@ -1,5 +1,6 @@
-# How to run bank_shit_app
+# How to run tictacktoe
 ## to run project you need pygame
 ```
 pip install pygame
 ```
+then open ```tictactoe.py```

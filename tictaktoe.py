@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import Toplevel
 from tkinter import messagebox
-
 import pygame
+
 pygame.init()
 turn = "X"
 buttons_list = []
@@ -16,19 +16,22 @@ button_size = 5
 win = 3
 # ---------------------------------------------------
 
-
 def end_music():
     pygame.mixer.music.load('end.mp3')
     pygame.mixer.music.play()
+
 def error_music():
     pygame.mixer.music.load('eror.mp3')
     pygame.mixer.music.play()
+
 def main_music():
     pygame.mixer.music.load('main_music.mp3')
     pygame.mixer.music.play(-1)
-def restart():
-    window.destroy()
 
+def restart():
+    global window
+    window.destroy()
+    menu.deiconify()
 
 def button_click(event):
     global turn
@@ -211,7 +214,6 @@ def button_click(event):
             messagebox.showinfo("THE END", f"идите нахуй с такой игрой")
             restart()
 
-
 def apply_settings():
     try:
         global grid_size, win, buttons_list, counter
@@ -227,15 +229,13 @@ def apply_settings():
             window.title('Tictaktoe')
             window.configure(bg='black')
 
-            # Инициализация списка кнопок
             buttons_list = []
-
             for row in range(grid_size):
                 buttons_row = []
                 for col in range(grid_size):
                     print(row, col)
                     button = tk.Button(
-                        window,  # Указываем родительское окно
+                        window,
                         text="",
                         width=int(button_size),
                         height=int(button_size / 2),
@@ -245,11 +245,12 @@ def apply_settings():
                     button.bind("<Button-1>", lambda event, btn=button: button_click(btn))
                     buttons_row.append(button)  # Добавляем кнопку в текущий ряд
                 buttons_list.append(buttons_row)  # Добавляем ряд в список кнопок
-        else:
-            messagebox.showinfo("ERROR", "WIN is nigger than GRID SIZE")
-    except ValueError:
-        messagebox.showinfo("ERROR", "Eб твою мать ты никогда не пользовался приложениями?\n \nЗАПОЛНИ ПОЛЯ СУКА")
 
+            menu.withdraw()  # Скрываем основное окно
+        else:
+            messagebox.showinfo("ERROR", "WIN is greater than GRID SIZE")
+    except ValueError:
+        messagebox.showinfo("ERROR", "Please enter valid numbers for Grid Size and Win conditions")
 
 # -----------------
 # MENU

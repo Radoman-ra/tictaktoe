@@ -1,5 +1,6 @@
-# How to run tictacktoe
-## to run project you need pygame
+# How to run tic-tac-toe
+## To run the project you need pygame
+For installing pygame execute this command in python console:
 ```
 pip install pygame
 ```

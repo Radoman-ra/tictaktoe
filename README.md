@@ -7,16 +7,15 @@ pip install pygame
 then open ```tictactoe.py```
 
 ## TO DO
-- saving game
-- [ ] the question when clicking on the cross is "Do you want to save?"
-- [ ] creates a save file
-- [ ] add the "continue game" button to the menu
-
-## DONE
 <details>
 
-<summary>Done list</summary>
+<summary>Done</summary>
 
 - [x] center the windows
 
 </details>
+
+- saving game
+  - [ ] the question when clicking on the cross is "Do you want to save?"
+  - [ ] creates a save file
+  - [ ] add the "continue game" button to the menu

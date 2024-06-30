@@ -12,6 +12,11 @@ then open ```tictactoe.py```
 - [ ] creates a save file
 - [ ] add the "continue game" button to the menu
 
-
 ## DONE
+<details>
+
+<summary>Done list</summary>
+
 - [x] center the windows
+
+</details>

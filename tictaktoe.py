@@ -42,6 +42,17 @@ def win_notification():
     restart()
 
 
+def center_window(window, width, height):
+
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+
+    x = (screen_width - width) // 2
+    y = (screen_height - height) // 2
+
+    window.geometry(f'{width}x{height}+{x}+{y}')
+
+
 def button_click(event):
     global turn
     if event.cget("text") == "":
@@ -213,6 +224,7 @@ def button_click(event):
             else:
                 turn = "X"
         else:
+            event.config(text=turn)
             error_music()
             messagebox.showinfo("THE END", f"The game ended in a draw")
             restart()
@@ -232,6 +244,7 @@ def apply_settings():
             window.geometry(f'{67 * grid_size}x{67 * grid_size}')
             window.title('Tictaktoe')
             window.configure(bg='black')
+            center_window(window, 67 * grid_size, 67*grid_size)
 
             buttons_list = []
             for row in range(grid_size):
@@ -265,6 +278,7 @@ def apply_settings():
 
 menu.geometry('200x200')
 menu.title('TicTacToe Menu')
+center_window(menu, 200, 200)
 label_menu = tk.Label(menu, text="MENU", font=("Arial", 16))
 label_menu.pack(pady=10)
 frame_Grid_size = tk.Frame(menu)

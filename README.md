@@ -7,7 +7,7 @@ pip install pygame
 then open ```tictactoe.py```
 
 ## TO DD
-- [ ] center the windows
+- [x] center the windows
 - saving
 - [ ] the question when clicking on the cross is "Do you want to save?"
 - [ ] creates a save file

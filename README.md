@@ -8,7 +8,7 @@ then open ```tictactoe.py```
 
 ## TO DD
 - [x] center the windows
-- saving
+- saving game
 - [ ] the question when clicking on the cross is "Do you want to save?"
 - [ ] creates a save file
-- [ ] add the "continue" button to the menu
+- [ ] add the "continue game" button to the menu

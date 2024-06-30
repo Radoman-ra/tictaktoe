@@ -15,6 +15,8 @@ counter = 0
 grid_size = 16
 button_size = 5
 win = 3
+
+
 # ---------------------------------------------------
 
 def end_music():
@@ -23,7 +25,7 @@ def end_music():
 
 
 def error_music():
-    pygame.mixer.music.load('eror.mp3')
+    pygame.mixer.music.load('error.mp3')
     pygame.mixer.music.play()
 
 
@@ -36,24 +38,25 @@ def restart():
     global window
     window.destroy()
     menu.deiconify()
+
+
 def win_notification():
     end_music()
     restart()
     messagebox.showinfo("THE END", f"{turn} win!!!!!")
 
 
-
 def center_window(window, width, height):
-
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()
 
     x = (screen_width - width) // 2
     y = (screen_height - height) // 2
 
-    window.geometry(f'{width}x{height}+{x}+{y}')
+    window.geometry(f'{width}x{height}+{x}+{y - 52}')
 
-def button_text(row,column):
+
+def button_text(row, column):
     text = window.grid_slaves(row=row, column=column)[0].cget("text")
     return text
 
@@ -76,6 +79,7 @@ def close_save():
         print("exit")
         window.destroy()
         menu.deiconify()
+
 
 def button_click(event):
     global turn
@@ -103,13 +107,13 @@ def button_click(event):
             down_check = 1
             up_down = 1
 
-            left_up_deagonal_check = 1
-            right_down_deagonal_check = 1
-            left_up_right_down_deagonal_counter = 1
+            left_up_diagonal_check = 1
+            right_down_diagonal_check = 1
+            left_up_right_down_diagonal_counter = 1
 
-            left_down_deagonal_check = 1
-            right_up_deagonal_check = 1
-            left_down_right_up_deagonal_counter = 1
+            left_down_diagonal_check = 1
+            right_up_diagonal_check = 1
+            left_down_right_up_diagonal_counter = 1
 
             # Checking the horizontal
             # Check on the left
@@ -180,13 +184,13 @@ def button_click(event):
             # Checking the diagonal
             # Top left
 
-            while left_up_deagonal_check < win:
-                if row_inf + left_up_deagonal_check < grid_size and col_inf - left_up_deagonal_check >= 0:
-                    if buttons_list[row_inf + left_up_deagonal_check][col_inf - left_up_deagonal_check] == turn:
-                        left_up_right_down_deagonal_counter += 1
-                        print(left_up_right_down_deagonal_counter)
-                        left_up_deagonal_check += 1
-                        if left_up_deagonal_check == win:
+            while left_up_diagonal_check < win:
+                if row_inf + left_up_diagonal_check < grid_size and col_inf - left_up_diagonal_check >= 0:
+                    if buttons_list[row_inf + left_up_diagonal_check][col_inf - left_up_diagonal_check] == turn:
+                        left_up_right_down_diagonal_counter += 1
+                        print(left_up_right_down_diagonal_counter)
+                        left_up_diagonal_check += 1
+                        if left_up_diagonal_check == win:
                             win_notification()
                     else:
                         break
@@ -195,15 +199,15 @@ def button_click(event):
 
             # Bottom right + general
 
-            while right_down_deagonal_check < win:
-                if row_inf - right_down_deagonal_check >= 0 and col_inf + right_down_deagonal_check < grid_size:
-                    if buttons_list[row_inf - right_down_deagonal_check][col_inf + right_down_deagonal_check] == turn:
-                        left_up_right_down_deagonal_counter += 1
-                        print(left_up_right_down_deagonal_counter)
-                        right_down_deagonal_check += 1
-                        if right_down_deagonal_check == win:
+            while right_down_diagonal_check < win:
+                if row_inf - right_down_diagonal_check >= 0 and col_inf + right_down_diagonal_check < grid_size:
+                    if buttons_list[row_inf - right_down_diagonal_check][col_inf + right_down_diagonal_check] == turn:
+                        left_up_right_down_diagonal_counter += 1
+                        print(left_up_right_down_diagonal_counter)
+                        right_down_diagonal_check += 1
+                        if right_down_diagonal_check == win:
                             win_notification()
-                        elif left_up_right_down_deagonal_counter == win:
+                        elif left_up_right_down_diagonal_counter == win:
                             win_notification()
                     else:
                         break
@@ -213,13 +217,13 @@ def button_click(event):
             # Checking the diagonal
             # Bottom left
 
-            while left_down_deagonal_check < win:
-                if row_inf - left_down_deagonal_check >= 0 and col_inf - left_down_deagonal_check >= 0:
-                    if buttons_list[row_inf - left_down_deagonal_check][col_inf - left_down_deagonal_check] == turn:
-                        left_down_right_up_deagonal_counter += 1
-                        print(left_down_right_up_deagonal_counter)
-                        left_down_deagonal_check += 1
-                        if left_down_deagonal_check == win:
+            while left_down_diagonal_check < win:
+                if row_inf - left_down_diagonal_check >= 0 and col_inf - left_down_diagonal_check >= 0:
+                    if buttons_list[row_inf - left_down_diagonal_check][col_inf - left_down_diagonal_check] == turn:
+                        left_down_right_up_diagonal_counter += 1
+                        print(left_down_right_up_diagonal_counter)
+                        left_down_diagonal_check += 1
+                        if left_down_diagonal_check == win:
                             win_notification()
                     else:
                         break
@@ -228,15 +232,15 @@ def button_click(event):
 
             # Top right + general
 
-            while right_up_deagonal_check < win:
-                if row_inf + right_up_deagonal_check < grid_size and col_inf + right_up_deagonal_check < grid_size:
-                    if buttons_list[row_inf + right_up_deagonal_check][col_inf + right_up_deagonal_check] == turn:
-                        left_down_right_up_deagonal_counter += 1
-                        print(left_down_right_up_deagonal_counter)
-                        right_up_deagonal_check += 1
-                        if right_up_deagonal_check == win:
+            while right_up_diagonal_check < win:
+                if row_inf + right_up_diagonal_check < grid_size and col_inf + right_up_diagonal_check < grid_size:
+                    if buttons_list[row_inf + right_up_diagonal_check][col_inf + right_up_diagonal_check] == turn:
+                        left_down_right_up_diagonal_counter += 1
+                        print(left_down_right_up_diagonal_counter)
+                        right_up_diagonal_check += 1
+                        if right_up_diagonal_check == win:
                             win_notification()
-                        elif left_down_right_up_deagonal_counter == win:
+                        elif left_down_right_up_diagonal_counter == win:
                             win_notification()
                     else:
                         break
@@ -266,10 +270,13 @@ def apply_settings():
             main_music()
             window = Toplevel(menu)
             window.geometry(f'{67 * grid_size}x{67 * grid_size}')
-            window.title('Tictaktoe')
+            if menu.winfo_screenheight() < (67 * grid_size) + 57:
+                raise PermissionError
+            window.title('TicTakToe')
             window.configure(bg='black')
-            center_window(window, 67 * grid_size, 67*grid_size)
+            center_window(window, 67 * grid_size, 67 * grid_size)
             window.protocol("WM_DELETE_WINDOW", close_save)
+            window.resizable(False, False)
 
             buttons_list = []
             for row in range(grid_size):
@@ -291,33 +298,53 @@ def apply_settings():
             menu.withdraw()
         else:
             error_music()
-            messagebox.showinfo("ERROR", "WIN is greater than GRID SIZE")
+            messagebox.showinfo("ERROR", "WIN error")
     except ValueError:
         error_music()
         messagebox.showinfo("ERROR", "Please enter valid numbers for Grid Size and Win conditions")
+    except PermissionError:
+        window.destroy()
+        error_music()
+        messagebox.showinfo("ERROR",
+                            f"Grid size is too big\nMax recommended size: {int(menu.winfo_screenheight() / 67) - 1}")
+
 
 def continue_game():
-        global grid_size, win, buttons_list, counter, turn
+    global grid_size, win, buttons_list, counter, turn
+    try:
         with open('save.txt', 'r') as file:
             text = file.read()
             lines = text.splitlines()
             turn = lines[0]
+            if turn != "O" and turn != "X":
+                raise ImportError
+
             print(turn)
             win = int(lines[1])
             print(win)
             matrix = [list(map(str, line.split(' '))) for line in lines[2:]]
+
         grid_size = len(matrix)
         counter = grid_size * grid_size
         print(f"Settings applied: grid_size={grid_size}, win={win}")
         if win <= grid_size and win > 1 and grid_size > 1:
+            if menu.winfo_screenheight() < (67 * grid_size) + 57:
+                raise PermissionError
             global window
             main_music()
             window = Toplevel(menu)
+            if window.winfo_screenheight() < 67 * grid_size:
+                window.destroy()
+                error_music()
+                messagebox.showinfo("ERROR",
+                                    f"Window is to small\nRecommended size {int(window.winfo_screenheight() / 67)}")
+
             window.geometry(f'{67 * grid_size}x{67 * grid_size}')
-            window.title('Tictaktoe')
+            window.title('TicTakToe')
             window.configure(bg='black')
-            center_window(window, 67 * grid_size, 67*grid_size)
+            center_window(window, 67 * grid_size, 67 * grid_size)
             window.protocol("WM_DELETE_WINDOW", close_save)
+            window.resizable(False, False)
 
             buttons_list = []
             for row in range(grid_size):
@@ -328,13 +355,16 @@ def continue_game():
                         color = "red"
                     elif matrix[row][col] == "O":
                         color = "blue"
-                    else:
+                    elif matrix[row][col] == "":
                         color = "white"
+                    else:
+                        window.destroy()
+                        raise ImportError
                     button = tk.Button(
                         window,
-                        text= matrix[row][col],
+                        text=matrix[row][col],
                         width=int(button_size),
-                        fg = color,
+                        fg=color,
                         height=int(button_size / 2),
                         font=("Arial", 0),
                     )
@@ -342,8 +372,20 @@ def continue_game():
                     button.bind("<Button-1>", lambda event, btn=button: button_click(btn))
                     buttons_row.append(button)
                 buttons_list.append(buttons_row)
-
             menu.withdraw()
+        else:
+            raise ImportError
+    except FileNotFoundError:
+        error_music()
+        messagebox.showinfo("ERROR", "No Save file")
+    except PermissionError:
+        window.destroy()
+        error_music()
+        messagebox.showinfo("ERROR",
+                            f"Grid size is too big\nMax recommended size: {int(menu.winfo_screenheight() / 67) - 1}")
+    except:
+        error_music()
+        messagebox.showinfo("ERROR", "Save is broken")
 
 
 # -----------------
@@ -364,7 +406,7 @@ entry_Grid_size.grid(row=0, column=1, padx=5, pady=5)
 
 frame_win = tk.Frame(menu)
 frame_win.pack(pady=5)
-label_win = tk.Label(frame_win, text="Win:")
+label_win = tk.Label(frame_win, text="Line for win:")
 label_win.grid(row=0, column=0, padx=5, pady=5)
 entry_win = tk.Entry(frame_win, width=10)
 entry_win.grid(row=0, column=1, padx=5, pady=5)
@@ -372,4 +414,5 @@ button_apply = tk.Button(menu, text="New game", command=apply_settings)
 button_apply.pack(pady=20)
 button_continue = tk.Button(menu, text="Continue game", command=continue_game)
 button_continue.pack()
+menu.resizable(False, False)
 menu.mainloop()

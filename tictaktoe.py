@@ -38,8 +38,9 @@ def restart():
     menu.deiconify()
 def win_notification():
     end_music()
-    messagebox.showinfo("THE END", f"{turn} win!!!!!")
     restart()
+    messagebox.showinfo("THE END", f"{turn} win!!!!!")
+
 
 
 def center_window(window, width, height):
@@ -52,6 +53,29 @@ def center_window(window, width, height):
 
     window.geometry(f'{width}x{height}+{x}+{y}')
 
+def button_text(row,column):
+    text = window.grid_slaves(row=row, column=column)[0].cget("text")
+    return text
+
+
+def close_save():
+    global grid_size, turn, win
+    if messagebox.askokcancel("Quit", "Do you want to save?"):
+        print("saving...")
+        with open('save.txt', 'w') as file:
+            file.write(turn + "\n" + str(win) + "\n")
+            for row in range(grid_size):
+                text = ""
+                for column in range(grid_size):
+                    text += button_text(row, column) + " "
+                file.write(text + "\n")
+
+        window.destroy()
+        menu.destroy()
+    else:
+        print("exit")
+        window.destroy()
+        menu.deiconify()
 
 def button_click(event):
     global turn
@@ -245,6 +269,7 @@ def apply_settings():
             window.title('Tictaktoe')
             window.configure(bg='black')
             center_window(window, 67 * grid_size, 67*grid_size)
+            window.protocol("WM_DELETE_WINDOW", close_save)
 
             buttons_list = []
             for row in range(grid_size):
@@ -271,14 +296,63 @@ def apply_settings():
         error_music()
         messagebox.showinfo("ERROR", "Please enter valid numbers for Grid Size and Win conditions")
 
+def continue_game():
+        global grid_size, win, buttons_list, counter, turn
+        with open('save.txt', 'r') as file:
+            text = file.read()
+            lines = text.splitlines()
+            turn = lines[0]
+            print(turn)
+            win = int(lines[1])
+            print(win)
+            matrix = [list(map(str, line.split(' '))) for line in lines[2:]]
+        grid_size = len(matrix)
+        counter = grid_size * grid_size
+        print(f"Settings applied: grid_size={grid_size}, win={win}")
+        if win <= grid_size and win > 1 and grid_size > 1:
+            global window
+            main_music()
+            window = Toplevel(menu)
+            window.geometry(f'{67 * grid_size}x{67 * grid_size}')
+            window.title('Tictaktoe')
+            window.configure(bg='black')
+            center_window(window, 67 * grid_size, 67*grid_size)
+            window.protocol("WM_DELETE_WINDOW", close_save)
+
+            buttons_list = []
+            for row in range(grid_size):
+                buttons_row = []
+                for col in range(grid_size):
+                    print(row, col)
+                    if matrix[row][col] == "X":
+                        color = "red"
+                    elif matrix[row][col] == "O":
+                        color = "blue"
+                    else:
+                        color = "white"
+                    button = tk.Button(
+                        window,
+                        text= matrix[row][col],
+                        width=int(button_size),
+                        fg = color,
+                        height=int(button_size / 2),
+                        font=("Arial", 0),
+                    )
+                    button.grid(column=col, row=row, padx=1, pady=2)
+                    button.bind("<Button-1>", lambda event, btn=button: button_click(btn))
+                    buttons_row.append(button)
+                buttons_list.append(buttons_row)
+
+            menu.withdraw()
+
 
 # -----------------
 # MENU
 # -----------------
 
-menu.geometry('200x200')
+
 menu.title('TicTacToe Menu')
-center_window(menu, 200, 200)
+center_window(menu, 200, 240)
 label_menu = tk.Label(menu, text="MENU", font=("Arial", 16))
 label_menu.pack(pady=10)
 frame_Grid_size = tk.Frame(menu)
@@ -294,6 +368,8 @@ label_win = tk.Label(frame_win, text="Win:")
 label_win.grid(row=0, column=0, padx=5, pady=5)
 entry_win = tk.Entry(frame_win, width=10)
 entry_win.grid(row=0, column=1, padx=5, pady=5)
-button_apply = tk.Button(menu, text="Apply Settings", command=apply_settings)
+button_apply = tk.Button(menu, text="New game", command=apply_settings)
 button_apply.pack(pady=20)
+button_continue = tk.Button(menu, text="Continue game", command=continue_game)
+button_continue.pack()
 menu.mainloop()

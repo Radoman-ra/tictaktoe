@@ -12,10 +12,11 @@ then open ```tictactoe.py```
 <summary>Done</summary>
 
 - [x] center the windows
+- saving game
+  - [x] the question when clicking on the cross is "Do you want to save?"
+  - [X] creates a save file
+  - [X] add the "continue game" button to the menu
 
 </details>
 
-- saving game
-  - [ ] the question when clicking on the cross is "Do you want to save?"
-  - [ ] creates a save file
-  - [ ] add the "continue game" button to the menu
+
